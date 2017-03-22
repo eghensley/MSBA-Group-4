@@ -199,7 +199,7 @@ mse5 = boost.test.errors
 output <- rbind(output, c("model 5", boost.test.overall.error, mse5))
 
 
-data_test <- read_csv("C:/Users/Eric/Desktop/ChurnDataTest.csv")
+data_test <- read.csv("C:/Users/Eric/Desktop/ChurnDataTest.csv")
 
 data_test <- data_test[complete.cases(data_test), ]
 data_test <- data_test[,-1]
