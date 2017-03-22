@@ -147,7 +147,7 @@ test.errors = rep(NA, length.lambdas)
 test.overall.error = rep(0, length.lambdas)
 length.test = nrow(test)
 for (i in (length.lambdas/2):length.lambdas) {
-  boost = gbm(Churn ~ ., data = train, distribution = "gaussian", 
+  boost = gbm(Churn ~ ., data = train, distribution = "bernoulli", 
               n.trees = 1000, shrinkage = lambdas[i])
   train.pred = predict(boost, train, n.trees = 1000)
   test.pred = predict(boost, test, n.trees = 1000)
@@ -179,7 +179,7 @@ test.errors[which.max(test.overall.error)]
 best.train.errors = 0
 best.test.errors = 0
 best.test.overall.error = 0
-boost.best = gbm(Churn ~ ., data = train, distribution = "gaussian", n.trees = 1000, shrinkage = best.lambda)
+boost.best = gbm(Churn ~ ., data = train, distribution = "bernoulli", n.trees = 1000, shrinkage = best.lambda)
 train.pred.boost = predict(boost.best, train, n.trees = 1000)
 test.pred.boost = predict(boost.best, test, n.trees = 1000)
 boost.train.errors = mean((train$Churn - train.pred.boost)^2)
@@ -224,7 +224,7 @@ data_test[,17] <- ifelse(PaymentMethod == "Credit card (automatic)", 0, ifelse(P
 training_split = sample(1:nrow(data), (nrow(data)/1)*1)
 train = data[training_split, ]
 
-boost.best = gbm(Churn ~ ., data = train, distribution = "gaussian", 
+boost.best = gbm(Churn ~ ., data = train, distribution = "bernoulli", 
             n.trees = 1000, shrinkage = best.lambda)
 final.results <- predict(boost.best, newdata=data_test, n.trees = 1000)
 final_results = c()
@@ -233,7 +233,7 @@ for (k in 1:length(final.results)) {
     final_results <- rbind(final_results, "Yes")
   }else {
     final_results <- rbind(final_results, "No")
-  }
+  } 
 }
 
 final_results
